@@ -1,4 +1,7 @@
-namespace Catalog.Api.Products.CreateProduct;
+using Catalog.Api.Products.Commands.CreateProduct.Command;
+using Catalog.Api.Products.Commands.CreateProduct.Result;
+
+namespace Catalog.Api.Products.Commands.CreateProduct;
 
 internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {

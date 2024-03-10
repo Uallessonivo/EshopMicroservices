@@ -1,7 +1,8 @@
-using Catalog.Api.Products.CreateProduct.Request;
-using Catalog.Api.Products.CreateProduct.Response;
+using Catalog.Api.Products.Commands.CreateProduct.Command;
+using Catalog.Api.Products.Commands.CreateProduct.Request;
+using Catalog.Api.Products.Commands.CreateProduct.Response;
 
-namespace Catalog.Api.Products.CreateProduct;
+namespace Catalog.Api.Products.Commands.CreateProduct;
 
 public class CreateProductEndpoint : ICarterModule
 {

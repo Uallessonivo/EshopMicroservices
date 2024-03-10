@@ -22,4 +22,9 @@
       <PackageReference Include="Marten" Version="7.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Products\Commands\" />
+      <Folder Include="Products\Queries\" />
+    </ItemGroup>
+
 </Project>
