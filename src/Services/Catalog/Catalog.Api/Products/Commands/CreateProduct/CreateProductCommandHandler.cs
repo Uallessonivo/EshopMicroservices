@@ -3,11 +3,12 @@ using Catalog.Api.Products.Commands.CreateProduct.Result;
 
 namespace Catalog.Api.Products.Commands.CreateProduct;
 
-internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler(IDocumentSession session, Logger<CreateProductCommandHandler> logger)
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        // Create product
+        logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}", command);
         var product = new Product
         {
             Name = command.Name,
@@ -16,11 +17,9 @@ internal class CreateProductCommandHandler(IDocumentSession session) : ICommandH
             Price = command.Price
         };
         
-        // Save product
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
-        
-        // Return result
+
         return new CreateProductResult(product.Id);
     }
 }
