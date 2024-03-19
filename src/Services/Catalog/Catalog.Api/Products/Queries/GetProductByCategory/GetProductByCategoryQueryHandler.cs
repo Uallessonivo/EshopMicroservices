@@ -3,12 +3,11 @@ using Catalog.Api.Products.Queries.GetProductByCategory.Result;
 
 namespace Catalog.Api.Products.Queries.GetProductByCategory;
 
-internal class GetProductByCategoryQueryHandler(IQuerySession session, ILogger<GetProductByCategoryQueryHandler> logger) 
+internal class GetProductByCategoryQueryHandler(IQuerySession session) 
     : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
     public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery query, CancellationToken cancellationToken)
     {
-        logger.LogInformation("GetProductByCategoryQueryHandler.Handle called with {@Query}", query);
         var products = await session.Query<Product>()
             .Where(p => p.Categories.Contains(query.Category))
             .ToListAsync(cancellationToken);
