@@ -10,3 +10,5 @@ global using BuildingBlocks.Exceptions;
 global using basket.Api.Exceptions;
 global using basket.Api.Data;
 global using BuildingBlocks.Exceptions.Handler;
+global using System.Text.Json;
+global using Microsoft.Extensions.Caching.Distributed;
