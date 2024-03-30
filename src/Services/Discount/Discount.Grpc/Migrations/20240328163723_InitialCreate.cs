@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Discount.Api.Migrations
+namespace Discount.Grpc.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

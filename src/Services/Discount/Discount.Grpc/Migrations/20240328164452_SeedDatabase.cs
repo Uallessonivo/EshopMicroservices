@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Discount.Api.Migrations
+namespace Discount.Grpc.Migrations
 {
     /// <inheritdoc />
     public partial class SeedDatabase : Migration

@@ -1,4 +1,4 @@
-namespace Discount.Api.Data;
+namespace Discount.Grpc.Data;
 
 public static class Extensions
 {

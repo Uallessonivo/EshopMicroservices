@@ -72,11 +72,11 @@
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
   
-  discount.api:
-    image: ${DOCKER_REGISTRY-}discountapi
+  Discount.Grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
-      dockerfile: Services/Discount/Discount.Api/Dockerfile
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTs=8080
