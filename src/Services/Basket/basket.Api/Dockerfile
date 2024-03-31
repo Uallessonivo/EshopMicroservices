@@ -1,5 +1,7 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -9,14 +11,14 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Basket/basket.Api/basket.Api.csproj", "Services/Basket/basket.Api/"]
 COPY ["BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj", "BuildingBlocks/BuildingBlocks/"]
-RUN dotnet restore "Services/Basket/basket.Api/basket.Api.csproj"
+RUN dotnet restore "./Services/Basket/basket.Api/basket.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Basket/basket.Api"
-RUN dotnet build "basket.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./basket.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "basket.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./basket.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
