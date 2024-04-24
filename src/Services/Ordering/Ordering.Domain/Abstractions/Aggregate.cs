@@ -17,7 +17,5 @@
             _domainEvents.Clear();
             return dequeuedEvents;
         }
-
-
     }
 }
