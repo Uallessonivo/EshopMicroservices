@@ -28,7 +28,7 @@
                     OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(Guid.NewGuid()),
                     OrderName.Of("Order 1"),
-                    shippingAddres: address1,
+                    shippingAddress: address1,
                     billingAddress: address1,
                     payment2);
 
@@ -39,7 +39,7 @@
                     OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(Guid.NewGuid()),
                     OrderName.Of("Order 2"),
-                    shippingAddres: address2,
+                    shippingAddress: address2,
                     billingAddress: address2,
                     payment1);
 
