@@ -41,6 +41,18 @@
     restart: always
     ports:
       - "1433:1433"
+
+  messagebroker:
+    image: rabbitmq:management
+    container_name: messagebroker
+    hostname: ecommerce-mq
+    environment:
+        - RABBITMQ_DEFAULT_USER=guest
+        - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
   
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -73,13 +85,37 @@
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
       - GrpcSettings__DiscountUrl=https://discount.grpc:8081
+      - MessageBroker_Host=amqp://ecommerce-mq:5672
+      - MessageBroker_UserName=guest
+      - MessageBroker_Password=guest
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
+      - messagebroker
     ports:
       - "6001:8080"
       - "6061:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+        context: .
+        dockerfile: Services/Ordering/Ordering.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTs=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - MessageBroker_Host=amqp://ecommerce-mq:5672
+      - MessageBroker_UserName=guest
+      - MessageBroker_Password=guest
+    ports:
+      - "8080"
+      - "8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
