@@ -47,7 +47,7 @@ namespace Shopping.Web.Pages
             });
 
             await basketService.StoreBasket(new StoreBasketRequest(basket));
-            return RedirectToPage("cart");
+            return RedirectToPage("Cart");
         }
     }
 }
