@@ -1,12 +1,20 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Models.Ordering;
 
 namespace Shopping.Web.Pages
 {
-    public class OrderListModel : PageModel
+    public class OrderListModel(IOrderingService orderingService, ILogger<OrderListModel> logger)
+        : PageModel
     {
-        public void OnGet()
+        public IEnumerable<OrderModel> Orders { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            var customerId = Guid.NewGuid();
+            var respone = await orderingService.GetOrdersByCustomer(customerId);
+
+            Orders = respone.Orders;
+
+            return Page();
         }
     }
 }
